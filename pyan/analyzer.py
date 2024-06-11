@@ -466,6 +466,7 @@ class CallGraphVisitor(ast.NodeVisitor):
         self.visit_FunctionDef(node)  # TODO: alias for now; tag async functions in output in a future version?
 
     def visit_Lambda(self, node):
+        return  # Workaround for ExecuteInInnerScope() raising ValueError: Unknown scope.
         # TODO: avoid lumping together all lambdas in the same namespace.
         self.logger.debug("Lambda, %s:%s" % (self.filename, node.lineno))
         with ExecuteInInnerScope(self, "lambda"):
@@ -847,6 +848,7 @@ class CallGraphVisitor(ast.NodeVisitor):
         self.analyze_comprehension(node, "genexpr")
 
     def analyze_comprehension(self, node, label, field1="elt", field2=None):
+        return  # Workaround for ExecuteInInnerScope() raising ValueError: Unknown scope.
         # The outermost iterator is evaluated in the current scope;
         # everything else in the new inner scope.
         #
